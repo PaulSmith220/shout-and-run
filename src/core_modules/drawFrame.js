@@ -7,9 +7,30 @@ let drawFrame = (canvasCtx, animationFrame, volumeMeter) => {
     // clear the background
     canvasCtx.clearRect(0, 0, config.frame.width, config.frame.height);
 
-    let volume = volumeMeter.volume;
 
-    // check if we're currently clipping
+    let volume = volumeMeter.volume;
+    drawVolume(canvasCtx, volumeMeter);
+
+    if (window["world"]) {
+        world.drawLevel(world.currentLevel, canvasCtx, world.cameraPos);
+    }
+
+    if (window["player"]) {
+        window.player.update(world.levels[world.currentLevel]);
+        world.drawPlayer(window.player, canvasCtx);
+    }
+
+
+
+
+
+    // set up the next visual callback
+    animationFrame = window.requestAnimationFrame( drawFrame.bind(this,  canvasCtx, animationFrame, volumeMeter) );
+};
+
+let drawVolume = (canvasCtx, volumeMeter) => {
+    let volume = volumeMeter.volume;
+// check if we're currently clipping
     if (volumeMeter.checkClipping) {
         canvasCtx.fillStyle = "red";
     }
@@ -25,22 +46,18 @@ let drawFrame = (canvasCtx, animationFrame, volumeMeter) => {
     //canvasCtx.fillRect(0, 0, volume * config.frame.width, config.frame.height);
 
     canvasCtx.beginPath();
-    canvasCtx.arc(config.frame.width/2, config.frame.height/2, volume * config.frame.width , 0, Math.PI*2, true);
+    canvasCtx.arc(0, 0, volume * 60 , 0, Math.PI*2, true);
     canvasCtx.closePath();
     canvasCtx.fill();
 
 
-    let shoutLevelX = config.audio.shoutLevel * config.frame.width;
-    canvasCtx.strokeStyle = "black";
+    let shoutLevelX = config.audio.shoutLevel * 60;
+    canvasCtx.strokeStyle = "#ddd";
     //canvasCtx.fillRect(shoutLevelX, 0, 2, config.frame.height);
     canvasCtx.beginPath();
-    canvasCtx.arc(config.frame.width/2, config.frame.height/2, shoutLevelX , 0, Math.PI*2, true);
+    canvasCtx.arc(0, 0, shoutLevelX , 0, Math.PI*2, true);
     canvasCtx.closePath();
     canvasCtx.stroke();
-
-
-    // set up the next visual callback
-    animationFrame = window.requestAnimationFrame( drawFrame.bind(this,  canvasCtx, animationFrame, volumeMeter) );
 };
 
 export default drawFrame;
