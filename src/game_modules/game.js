@@ -67,16 +67,18 @@ export default (volumeMeter) => {
                 this.player.body.velocity.x = 200;
 
                 let volume = volumeMeter.volume;
+                let shoutLevel = window["shoutLevel"] || config.audio.shoutLevel;
+                let whisperLevel = window["whisperLevel"] || config.audio.whisperLevel;
 
-                if (this.cursors.up.isDown || volume >= config.audio.shoutLevel) {
+                if (this.cursors.up.isDown || volume >= shoutLevel) {
                     this.playerJump();
                 }
 
-                if (this.cursors.down.isDown || (volume >= config.audio.whisperLevel && volume < config.audio.shoutLevel)) {
+                if (this.cursors.down.isDown || (volume >= whisperLevel && volume < shoutLevel)) {
                     this.playerDuck(true);
                 }
 
-                if (!this.cursors.down.isDown && this.player.isDucked && !this.pressingDown && (volume < config.audio.whisperLevel || volume >= config.audio.shoutLevel)) {
+                if (!this.cursors.down.isDown && this.player.isDucked && !this.pressingDown && (volume < whisperLevel || volume >= shoutLevel)) {
                     this.playerDuck(false);
                 }
 

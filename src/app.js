@@ -1,7 +1,3 @@
-/**
- * Created by paul on 13.03.2017.
- */
-
 import initAudioContext from "./core_modules/initAudioContext";
 import config from "./config";
 import Boot from "./game_modules/boot";
@@ -32,6 +28,9 @@ window.onload = () => {
         Game(meter);
         Init();
     }));
+
+    document.getElementById("shoutLevel").value = config.audio.shoutLevel * 100;
+    document.getElementById("whisperLevel").value = config.audio.whisperLevel * 100;
 
 
 };

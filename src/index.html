@@ -31,10 +31,34 @@
             text-align: center;
             font-size: 20px;
             padding: 20px;
+
         }
+
+        label {
+            display: block;
+        }
+
+        input {
+            width: 300px;
+        }
+
+        span {
+            display: inline-block;
+            width: 150px;
+        }
+
     </style>
 </head>
 <body>
-<div class="title">Shout to jump, whisper to crouch. Do not bump into walls, collect coins</div>
+<div class="title">Shout to jump, whisper to crouch. Do not bump into walls, collect coins
+    <label for="shoutLevel">
+        <span>Jump volume</span>
+        <input type="range" min="0" max="100" step="1" id="shoutLevel" onchange="window.shoutLevel = this.value/100"/>
+    </label>
+    <label for="whisperLevel">
+        <span>Crouch volume</span>
+        <input type="range" min="0" max="100" step="1" id="whisperLevel" onchange="window.whisperLevel = this.value/100"/>
+    </label>
+</div>
 </body>
 </html>
