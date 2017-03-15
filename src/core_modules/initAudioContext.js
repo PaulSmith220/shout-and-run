@@ -31,6 +31,7 @@ export default (audioCtx, callback) => {
                 result.mediaStreamSource = audioCtx.createMediaStreamSource(stream);
                 result.volumeMeter = new VolumeMeter(audioCtx);
                 result.mediaStreamSource.connect(result.volumeMeter.processor);
+                window.volumeMeter = result.volumeMeter;
 
                 if (callback) {
                     callback(result.volumeMeter);
@@ -40,6 +41,8 @@ export default (audioCtx, callback) => {
     } catch (e) {
         alert('getUserMedia threw exception :' + e);
     }
+
+
 
     return result;
 }

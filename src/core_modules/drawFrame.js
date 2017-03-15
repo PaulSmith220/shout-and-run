@@ -16,8 +16,14 @@ let drawFrame = (canvasCtx, animationFrame, volumeMeter) => {
     }
 
     if (window["player"]) {
+        window.player.speed[0] = volume*4;
+        if (volume > config.audio.shoutLevel) {
+            window.player.jump();
+        }
         window.player.update(world.levels[world.currentLevel]);
         world.drawPlayer(window.player, canvasCtx);
+        //world.cameraPos = player.pos[0] / config.world.blockSize;
+
     }
 
 

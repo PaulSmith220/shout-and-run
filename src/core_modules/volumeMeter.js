@@ -5,7 +5,7 @@ export default class VolumeMeter {
         this.processor.onaudioprocess = this.calculateVolume;
         this.processor.clipping = false;
         this.processor.clipLevel = 0.98;
-        this.processor.averaging = 0.95;
+        this.processor.averaging = 0.96;
         this.processor.clipLag = 750;
         this.processor.lastClip = 0;
         this.processor.volume = 0;

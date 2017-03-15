@@ -3,36 +3,35 @@
  */
 
 import initAudioContext from "./core_modules/initAudioContext";
-import drawFrame from "./core_modules/drawFrame";
 import config from "./config";
-import World from "./game_modules/world";
-import Player from "./game_modules/player";
+import Boot from "./game_modules/boot";
+import Preload from "./game_modules/preload";
+import Game from "./game_modules/game";
+import Init from "./game_modules/init";
 
-window.world = null;
+require("./assets/tilemaps/level1.json");
+require("./assets/tilemaps/level1.tmx");
+require("./assets/tilemaps/level1_my.json");
+require("./assets/tilemaps/level1_my.tmx");
+require.context('./assets/images', true, /\.png$/);
+require.context('./assets/audio', true, /\.(mp3|ogg|wav)$/);
+
+require("./js/gamecontroller.min.js");
+require("./js/phaser.min.js");
+
 window.canvasCtx = null;
-window.player = null;
+window.volumeMeter = null;
 
 window.onload = () => {
-    let canvasElem = document.getElementById("gameView");
-    canvasElem.width = config.frame.width;
-    canvasElem.height = config.frame.height;
-    canvasCtx = canvasElem.getContext("2d");
-
-
-    world = World;
-    world.currentLevel = 0;
-    world.prepareLevel(0);
-    world.cameraPos = 0;
-
-    window.player = new Player();
-    player.pos = world.levels[0].spawn;
-
-
-
     let audioCtx = new (window.AudioContext || window.webkitAudioContext),
         animationFrame = null;
 
-    let {volumeMeter, mediaStreamSource} = initAudioContext(audioCtx, drawFrame.bind(this, canvasCtx, animationFrame));
+    let {volumeMeter, mediaStreamSource} = initAudioContext(audioCtx, (meter => {
+        Boot();
+        Preload();
+        Game(meter);
+        Init();
+    }));
 
 
 };

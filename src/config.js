@@ -8,7 +8,8 @@ export default {
     },
 
     audio: {
-        shoutLevel: 0.4
+        shoutLevel: 0.5,
+        whisperLevel: 0.06
     },
 
     world: {
@@ -19,7 +20,10 @@ export default {
     player: {
         speedFactor: 1,
         jumpPower: 2,
-        size: 50,
-        speedLimit: 3
+        size: 30,
+        speedLimit: {
+            x: 2,
+            y: 7
+        }
     }
 }
